@@ -8,6 +8,7 @@ const TodoItem = ({
   onSaveClick,
   onDeleteClick,
 }) => {
+  // useRef  to get value of title element while editing
   const titleInput = useRef(null);
   return (
     <li className='list-group-item'>

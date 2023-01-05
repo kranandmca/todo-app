@@ -1,22 +1,23 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import TodoItem from './TodoItem';
+// TodoList component pass each Todo Item as prps to TodoItem Component
 const TodoList = ({ todos, setTodos }) => {
+  // useState for make input box editable after edit click
   const [editingItemId, setEditingItemId] = useState(null);
-  const navigate = useNavigate();
+  // set id for Todo item which is being edited
   const handleEditClick = (id) => {
     setEditingItemId(id);
   };
-
+  // cancel button click while editing
   const handleCancelClick = () => {
     setEditingItemId(null);
   };
-
+  // called afer save buuton click while editing
   const handleSaveClick = (id, titleobj) => {
     // Find the todo item with the matching ID
     const todo = todos.find((todo) => todo.id === id);
-
+    // Send a UPDATE request to the API
     axios
       .put(
         `https://jsonplaceholder.typicode.com/todos/${id}`,
@@ -33,16 +34,14 @@ const TodoList = ({ todos, setTodos }) => {
       .then((response) => {
         // Update the todo item in the list
         setTodos(todos.map((t) => (t.id === id ? response.data : t)));
-        navigate('/');
       })
       .catch((error) => {
         console.error(error);
-        navigate('/');
       });
 
     setEditingItemId(null);
   };
-  // Delete request to Jso
+  // Called when delete button clicked
   const handleDelete = (id) => {
     // Send a DELETE request to the API
     axios
@@ -55,6 +54,7 @@ const TodoList = ({ todos, setTodos }) => {
   return (
     <div className='d-flex flex-row justify-content-center'>
       <ul className='list-group' style={listStyle}>
+        {/* Iterate through each item in todo list */}
         {todos.map((item) => (
           <TodoItem
             key={item.id}

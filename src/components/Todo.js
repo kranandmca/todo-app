@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import TodoList from './TodoList';
-import { useNavigate } from 'react-router-dom';
 
 const Todo = () => {
+  // todos array for storing todos
   const [todos, setTodos] = useState(null);
+  // newItem for adding new todo element
   const [newItem, setNewItem] = useState('');
-  const navigate = useNavigate();
+
+  // Fetching todos with GET request to api when component mounts
   useEffect(() => {
     axios.get('https://jsonplaceholder.typicode.com/todos').then((result) => {
       setTodos(result.data);
@@ -15,9 +17,10 @@ const Todo = () => {
   const handleChange = (event) => {
     setNewItem(event.target.value);
   };
-
+  // called when Add Todo button clicked
   const addTodo = (event) => {
     event.preventDefault();
+    // Post request to api
     axios
       .post(
         'https://jsonplaceholder.typicode.com/todos',
@@ -34,12 +37,9 @@ const Todo = () => {
       )
       .then((response) => {
         setTodos([...todos, response.data]);
-        // window.alert(JSON.stringify(response.data));
-        navigate('/');
       })
       .catch((error) => {
         console.error(error);
-        navigate('/');
       });
     setNewItem('');
   };

@@ -33,7 +33,8 @@ const Todo = () => {
         }
       )
       .then((response) => {
-        window.alert(JSON.stringify(response.data));
+        setTodos([...todos, response.data]);
+        // window.alert(JSON.stringify(response.data));
         navigate('/');
       })
       .catch((error) => {
@@ -42,9 +43,6 @@ const Todo = () => {
       });
     setNewItem('');
   };
-  const updateTodo = () => {};
-
-  const deleteTodo = () => {};
 
   return (
     <div>
@@ -67,13 +65,9 @@ const Todo = () => {
         </button>
       </form>
       {todos ? (
-        <TodoList
-          todos={todos}
-          updateTodo={updateTodo}
-          deleteTodo={deleteTodo}
-        />
+        <TodoList todos={todos} setTodos={setTodos} />
       ) : (
-        <div>Loading...</div>
+        <div className='text-center m-2'>Loading...</div>
       )}
     </div>
   );

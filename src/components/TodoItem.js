@@ -6,6 +6,7 @@ const TodoItem = ({
   onEditClick,
   onCancelClick,
   onSaveClick,
+  onDeleteClick,
 }) => {
   const titleInput = useRef(null);
   return (
@@ -44,6 +45,13 @@ const TodoItem = ({
             onClick={onEditClick}
           >
             Edit
+          </button>
+          <button
+            type='button'
+            className='btn btn-sm:hover btn-danger m-1'
+            onClick={() => onDeleteClick(item.id)}
+          >
+            Delete
           </button>
         </>
       )}

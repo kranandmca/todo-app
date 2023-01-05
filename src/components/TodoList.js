@@ -42,7 +42,16 @@ const TodoList = ({ todos, setTodos }) => {
 
     setEditingItemId(null);
   };
-
+  // Delete request to Jso
+  const handleDelete = (id) => {
+    // Send a DELETE request to the API
+    axios
+      .delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+      .then(() => {
+        // Remove the deleted item from the todo list
+        setTodos(todos.filter((todo) => todo.id !== id));
+      });
+  };
   return (
     <div className='d-flex flex-row justify-content-center'>
       <ul className='list-group' style={listStyle}>
@@ -54,6 +63,7 @@ const TodoList = ({ todos, setTodos }) => {
             onEditClick={() => handleEditClick(item.id)}
             onCancelClick={handleCancelClick}
             onSaveClick={handleSaveClick}
+            onDeleteClick={handleDelete}
           />
         ))}
       </ul>
